@@ -1,0 +1,24 @@
+{
+  "name": "datasport-crawler",
+  "version": "1.0.0",
+  "description": "Monitor datasport.de registration page for available spots",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "keywords": ["monitor", "crawler", "datasport", "triathlon"],
+  "author": "Kira",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "nodemailer": "^6.9.13"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.0",
+    "@types/nodemailer": "^6.4.14",
+    "typescript": "^5.4.5"
+  }
+}
