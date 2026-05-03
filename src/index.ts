@@ -1,12 +1,10 @@
 import { CONFIG } from './config';
 import { log } from './logger';
-import { checkWebsite } from './monitor';
-
-const intervalMs = CONFIG.POLL_INTERVAL_SECONDS * 1000;
+import { checkWebsite, getNextIntervalMs } from './monitor';
 
 log('info', '🚀 Datasport Crawler started');
 log('info', `Monitoring: ${CONFIG.TARGET_URL}`);
-log('info', `Interval: ${CONFIG.POLL_INTERVAL_SECONDS}s`);
+log('info', `Base interval: ${CONFIG.POLL_INTERVAL_SECONDS}s, jitter: ${CONFIG.JITTER_FACTOR * 100}%`);
 log('info', `Status text: "${CONFIG.FULL_STATUS_TEXT}"`);
 
 // Graceful shutdown handlers
@@ -15,10 +13,9 @@ let isShuttingDown = false;
 function shutdown(signal: string) {
   if (isShuttingDown) return;
   isShuttingDown = true;
-  
+
   log('info', `${signal} received, shutting down...`);
-  
-  // Allow pending operations to complete
+
   setTimeout(() => {
     process.exit(0);
   }, 1000);
@@ -37,13 +34,17 @@ process.on('unhandledRejection', (reason) => {
   log('error', 'Unhandled rejection', reason);
 });
 
+// Run check with dynamic jittered interval
+async function runLoop() {
+  await checkWebsite();
+  const nextMs = getNextIntervalMs();
+  log('debug', `Next check in ${(nextMs / 1000).toFixed(1)}s`);
+  setTimeout(runLoop, nextMs);
+}
+
 // Initial check
 log('info', 'Running initial check...');
-checkWebsite();
-
-// Schedule recurring checks
-log('info', `Scheduling checks every ${CONFIG.POLL_INTERVAL_SECONDS} seconds`);
-const intervalId = setInterval(checkWebsite, intervalMs);
+runLoop();
 
 // Keep the process alive
 setInterval(() => {

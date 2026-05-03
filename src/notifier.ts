@@ -78,16 +78,20 @@ export async function notifyStatusChange(
   });
 
   if (isBlocked) {
-    const telegramMsg = `🚫 <b>Website Blocked!</b>\n\n` +
+    const intervalMin = Math.floor(CONFIG.POLL_INTERVAL_SECONDS / 60);
+    const telegramMsg = `🚫 <b>Website ${newStatus}</b>\n\n` +
       `<b>URL:</b> ${url}\n` +
       `<b>Detected:</b> ${timestamp}\n\n` +
-      `The monitoring service may have been blocked by the website. ` +
-      `Consider increasing the poll interval.`;
+      `The monitoring service detected ${newStatus.toLowerCase()} status. ` +
+      `Next alert in ${Math.floor(CONFIG.NOTIFICATION_COOLDOWN_SECONDS / 60)} minutes if issue persists.\n\n` +
+      `Current config: ${intervalMin}min interval, ${CONFIG.JITTER_FACTOR * 100}% jitter`;
 
-    const emailSubject = `[BLOCKED] Website Monitor — datasport.de`;
-    const emailBody = `The website may have blocked our monitoring service:\n${url}\n\n` +
+    const emailSubject = `[${newStatus}] Website Monitor — datasport.de`;
+    const emailBody = `The website monitoring service detected an issue:\n${url}\n\n` +
+      `Status: ${newStatus}\n` +
       `Detected at: ${timestamp}\n\n` +
-      `Consider increasing the poll interval to avoid being blocked.`;
+      `The service is using a ${intervalMin}-minute polling interval with ${CONFIG.JITTER_FACTOR * 100}% jitter.\n` +
+      `Next alert in ${Math.floor(CONFIG.NOTIFICATION_COOLDOWN_SECONDS / 60)} minutes if the issue persists.`;
 
     await Promise.all([
       sendTelegramNotification(telegramMsg),
