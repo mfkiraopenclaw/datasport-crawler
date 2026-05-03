@@ -37,21 +37,7 @@ npm start
 Create `.env` from `.env.example`:
 
 ```env
-# Required: Telegram notifications
-TELEGRAM_BOT_TOKEN=8196580223:AAGYhh-3xHZD5JFC7USAH22HlEttUz64GQw
-TELEGRAM_CHAT_ID=8727285876
 
-# Optional: Email notifications
-EMAIL_NOTIFICATIONS=true
-EMAIL_TO=Mika.farwick@icloud.com
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=mf.kira.openclaw@gmail.com
-SMTP_PASS=wsdv cafs oyen cdkh
-
-# Advanced
-POLL_INTERVAL_SECONDS=5
-LOG_LEVEL=info
 ```
 
 ## Hostinger VPS Deployment
@@ -95,23 +81,7 @@ npm run build
 ### Step 4: Configure
 
 ```bash
-# Create environment file
-cat > .env << 'EOF'
-TARGET_URL=https://www.datasport.de/anmeldeservice/509/3081/11285
-POLL_INTERVAL_SECONDS=5
-TELEGRAM_BOT_TOKEN=8196580223:AAGYhh-3xHZD5JFC7USAH22HlEttUz64GQw
-TELEGRAM_CHAT_ID=8727285876
-EMAIL_NOTIFICATIONS=true
-EMAIL_TO=Mika.farwick@icloud.com
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=mf.kira.openclaw@gmail.com
-SMTP_PASS=wsdv cafs oyen cdkh
-LOG_LEVEL=info
-EOF
 
-# Secure the file
-chmod 600 .env
 ```
 
 ### Step 5: Create systemd Service
