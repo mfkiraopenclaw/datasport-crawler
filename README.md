@@ -34,20 +34,20 @@ npm start
 
 ## Configuration
 
-Create `.env` from `.env.example`:
+Create `.env` from `.env.example` and fill in your own:
 
 ```env
 # Required: Telegram notifications
-TELEGRAM_BOT_TOKEN=8196580223:AAGYhh-3xHZD5JFC7USAH22HlEttUz64GQw
-TELEGRAM_CHAT_ID=8727285876
+TELEGRAM_BOT_TOKEN=your_bot_token_here
+TELEGRAM_CHAT_ID=your_chat_id_here
 
 # Optional: Email notifications
 EMAIL_NOTIFICATIONS=true
-EMAIL_TO=Mika.farwick@icloud.com
+EMAIL_TO=your_email@example.com
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=mf.kira.openclaw@gmail.com
-SMTP_PASS=wsdv cafs oyen cdkh
+SMTP_USER=your_gmail_address
+SMTP_PASS=your_app_password
 
 # Advanced
 POLL_INTERVAL_SECONDS=5
@@ -94,24 +94,11 @@ npm run build
 
 ### Step 4: Configure
 
-```bash
-# Create environment file
-cat > .env << 'EOF'
-TARGET_URL=https://www.datasport.de/anmeldeservice/509/3081/11285
-POLL_INTERVAL_SECONDS=5
-TELEGRAM_BOT_TOKEN=8196580223:AAGYhh-3xHZD5JFC7USAH22HlEttUz64GQw
-TELEGRAM_CHAT_ID=8727285876
-EMAIL_NOTIFICATIONS=true
-EMAIL_TO=Mika.farwick@icloud.com
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=mf.kira.openclaw@gmail.com
-SMTP_PASS=wsdv cafs oyen cdkh
-LOG_LEVEL=info
-EOF
+Create `.env` from `.env.example` with your actual credentials:
 
-# Secure the file
-chmod 600 .env
+```bash
+cp .env.example .env
+nano .env
 ```
 
 ### Step 5: Create systemd Service
